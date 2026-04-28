@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import org.mindrot.jbcrypt.BCrypt;
 
 public class ProfileController {
     @FXML private TextField nameField;
@@ -30,9 +31,11 @@ public class ProfileController {
         String newPass = passwordField.getText().trim();
 
         if (!newName.isEmpty()) {
-            currentUser.setName(newName); // Нужно добавить сеттер в модель User, если его нет
+            currentUser.setName(newName);
+
             if (!newPass.isEmpty()) {
-                currentUser.setPassword(newPass); // И тут тоже
+                String hashedPassword = BCrypt.hashpw(newPass, BCrypt.gensalt());
+                currentUser.setPassword(hashedPassword);
             }
 
             DataService.saveData();

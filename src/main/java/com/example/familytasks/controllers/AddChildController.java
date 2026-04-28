@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import org.mindrot.jbcrypt.BCrypt;
 
 public class AddChildController {
     @FXML private TextField nameField;
@@ -15,17 +16,22 @@ public class AddChildController {
     @FXML
     private void handleSave() {
         String name = nameField.getText().trim();
-        String pass = passwordField.getText().trim();
+        String rawPassword = passwordField.getText().trim();
 
-        if (!name.isEmpty() && !pass.isEmpty()) {
-            // Генерируем новый ID (максимальный + 1)
+        if (!name.isEmpty() && !rawPassword.isEmpty()) {
+            // 1. Генерируем ХЕШ вместо сохранения чистого текста
+            String hashedPassword = BCrypt.hashpw(rawPassword, BCrypt.gensalt());
+
+            // 2. Создаем ID (лучше брать максимальный + 1)
             int newId = DataService.getUsers().stream()
-                    .mapToInt(User::getId)
-                    .max().orElse(0) + 1;
+                    .mapToInt(User::getId).max().orElse(0) + 1;
 
-            User newChild = new User(newId, name, pass, Role.CHILD);
+            // 3. Создаем объект с ХЕШЕМ
+            User newChild = new User(newId, name, hashedPassword, Role.CHILD);
+
+            // 4. Добавляем и сохраняем
             DataService.getUsers().add(newChild);
-            DataService.saveData(); // Сохраняем в JSON
+            DataService.saveData();
 
             closeWindow();
         }

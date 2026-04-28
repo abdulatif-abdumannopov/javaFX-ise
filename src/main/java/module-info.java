@@ -11,6 +11,7 @@ module com.example.familytasks {
     requires com.dlsc.formsfx;
     requires org.kordamp.ikonli.javafx;
     requires atlantafx.base;
+    requires jbcrypt;
 
     // Если ты все еще используешь AtlantaFX (дизайн), добавь и его:
     // requires atlantafx.base;
