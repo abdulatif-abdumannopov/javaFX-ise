@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox alignment="CENTER" spacing="20.0"
+      xmlns="http://javafx.com/javafx/17"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.example.familytasks.controllers.LoginController"
+      prefWidth="1000" prefHeight="500">
+
+    <padding>
+        <Insets bottom="30.0" left="30.0" right="30.0" top="30.0"/>
+    </padding>
+
+    <Label text="Family Tasks" style="-fx-font-size: 32px; -fx-font-weight: bold;"/>
+    <Label text="Добро пожаловать!" styleClass="text-muted"/>
+
+    <VBox spacing="10.0" alignment="CENTER_LEFT">
+        <Label text="Логин:"/>
+        <TextField fx:id="loginField" promptText="Введите имя..." styleClass="text-field"/>
+
+        <Label text="Пароль:"/>
+        <PasswordField fx:id="passwordField" promptText="******"/>
+    </VBox>
+
+    <CheckBox fx:id="rememberMe" text="Запомнить меня" selected="true"/>
+
+    <Button text="Войти" onAction="#handleLogin"
+            styleClass="button, btn-primary" prefWidth="200"/>
+
+    <Label fx:id="errorLabel" textFill="red" wrapText="true"/>
+</VBox>

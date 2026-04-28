@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox spacing="15" alignment="CENTER" prefWidth="350" style="-fx-padding: 25;"
+      xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.example.familytasks.controllers.ProfileController">
+
+    <Label text="Настройки профиля" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+
+    <VBox spacing="5">
+        <Label text="Ваше имя:"/>
+        <TextField fx:id="nameField" />
+    </VBox>
+
+    <VBox spacing="5">
+        <Label text="Новый пароль:"/>
+        <PasswordField fx:id="passwordField" promptText="Оставьте пустым, если не хотите менять"/>
+    </VBox>
+
+    <Separator />
+
+    <HBox spacing="10" alignment="CENTER_RIGHT">
+        <Button text="Отмена" onAction="#handleCancel" styleClass="btn, btn-default"/>
+        <Button text="Сохранить" onAction="#handleSave" styleClass="btn, btn-primary"/>
+    </HBox>
+</VBox>

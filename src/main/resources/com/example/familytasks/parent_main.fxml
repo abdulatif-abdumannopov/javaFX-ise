@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.familytasks.controllers.ParentController"
+            prefHeight="600.0" prefWidth="900.0">
+
+    <top>
+        <HBox spacing="20" alignment="CENTER_LEFT" style="-fx-background-color: #2d3436; -fx-padding: 15;">
+            <Label text="Панель Родителя" style="-fx-text-fill: white; -fx-font-size: 20px; -fx-font-weight: bold;"/>
+            <Region HBox.hgrow="ALWAYS" />
+            <Button text="Профиль" onAction="#handleShowProfile"
+                    style="-fx-background-color: #1b1b20; -fx-text-fill: white;"
+                    styleClass="btn"/>
+            <Button text="История" onAction="#handleShowHistory" styleClass="btn, btn-info"/>
+            <Button text="Выход" onAction="#handleLogout" styleClass="btn, btn-danger"/>
+        </HBox>
+    </top>
+
+    <left>
+        <VBox spacing="10" prefWidth="220" style="-fx-padding: 10; -fx-border-color: #3d4446; -fx-border-width: 0 1 0 0;">
+            <Label text="Список детей" style="-fx-font-weight: bold; -fx-opacity: 0.8;"/>
+            <ListView fx:id="childrenList" VBox.vgrow="ALWAYS" styleClass="edge-to-edge"/>
+            <Button text="Удалить ребенка" onAction="#handleDeleteChild" maxWidth="Infinity" styleClass="btn, btn-sm, btn-danger, btn-outline"/>
+            <Button text="+ Добавить ребенка" onAction="#handleAddChild" maxWidth="Infinity" styleClass="btn, btn-sm, btn-info"/>
+        </VBox>
+    </left>
+
+    <center>
+        <VBox spacing="15" style="-fx-padding: 20;">
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <Label text="Текущие задания" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+                <Region HBox.hgrow="ALWAYS" />
+                <Button text="Новое задание" onAction="#handleAddTask" styleClass="btn, btn-success"/>
+            </HBox>
+            <TableView fx:id="tasksTable" VBox.vgrow="ALWAYS">
+                <columns>
+                    <TableColumn fx:id="colTitle" text="Задание" prefWidth="300"/>
+                    <TableColumn fx:id="colChild" text="Кому" prefWidth="100"/>
+                    <TableColumn fx:id="colReward" text="Очки" prefWidth="80"/>
+                    <TableColumn fx:id="colStatus" text="Статус" prefWidth="120"/>
+                </columns>
+            </TableView>
+
+            <HBox spacing="10" alignment="CENTER_RIGHT">
+                <Button text="Удалить" onAction="#handleDeleteTask" styleClass="btn, btn-danger"/>
+                <Button text="Изменить" onAction="#handleEditTask" styleClass="btn, btn-default"/>
+                <Separator orientation="VERTICAL" />
+                <Button fx:id="btnReject" text="Отклонить" onAction="#handleRejectTask"
+                        styleClass="btn, btn-warning"/>
+                <Button fx:id="btnApprove" text="Принять" onAction="#handleApproveTask"
+                        styleClass="btn, btn-success"/>
+            </HBox>
+
+        </VBox>
+    </center>
+</BorderPane>

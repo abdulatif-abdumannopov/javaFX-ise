@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox spacing="15" prefWidth="600" prefHeight="400" style="-fx-padding: 20;"
+      xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.example.familytasks.controllers.HistoryController">
+
+    <Label text="История выполненных заданий" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+
+    <TableView fx:id="historyTable" VBox.vgrow="ALWAYS">
+        <columns>
+            <TableColumn fx:id="colTitle" text="Задание" prefWidth="250"/>
+            <TableColumn fx:id="colChild" text="Исполнитель" prefWidth="120"/>
+            <TableColumn fx:id="colReward" text="Награда" prefWidth="80"/>
+            <TableColumn fx:id="colStatus" text="Статус" prefWidth="100"/>
+        </columns>
+    </TableView>
+
+    <Button text="Закрыть" onAction="#handleClose" styleClass="btn, btn-default"/>
+</VBox>
