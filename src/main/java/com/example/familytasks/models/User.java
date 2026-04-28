@@ -5,10 +5,10 @@ import java.util.UUID;
 public class User {
     private int id;
     private String name;
-    private String password; // Здесь будет храниться хеш
+    private String password; 
     private Role role;
     private int balance;
-    private String sessionToken; // Ключ для проверки сессии
+    private String sessionToken; 
 
     public User(int id, String name, String password, Role role) {
         this.id = id;
@@ -18,7 +18,7 @@ public class User {
         this.balance = 0;
     }
 
-    // Геттеры
+    
     public int getId() { return id; }
     public String getName() { return name; }
     public String getPassword() { return password; }
@@ -26,7 +26,7 @@ public class User {
     public int getBalance() { return balance; }
     public String getSessionToken() { return sessionToken; }
 
-    // Сеттеры
+    
     public void setName(String name) { this.name = name; }
     public void setPassword(String password) { this.password = password; }
     public void setBalance(int balance) { this.balance = balance; }

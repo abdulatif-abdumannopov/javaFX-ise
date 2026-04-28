@@ -5,7 +5,7 @@ public class Task {
     private String title;
     private int reward;
     private int childId;
-    private String status; // NEW, PENDING, COMPLETED
+    private String status; 
 
     public Task(int id, String title, int reward, int childId) {
         this.id = id;
@@ -15,7 +15,7 @@ public class Task {
         this.status = "NEW";
     }
 
-    // Геттеры и сеттеры
+    
     public int getId() { return id; }
     public String getTitle() { return title; }
     public int getReward() { return reward; }

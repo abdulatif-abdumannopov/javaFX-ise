@@ -28,7 +28,7 @@ public class LoginController {
                 SessionService.saveSession(user);
             }
 
-            // Переключаем экран
+            
             if (user.getRole() == Role.PARENT) {
                 HelloApplication.changeScene("parent_main.fxml");
             } else {

@@ -11,20 +11,20 @@ import javafx.stage.Stage;
 public class AddTaskController {
     @FXML private TextField titleField;
     @FXML private TextField rewardField;
-    @FXML private ComboBox<User> childSelector; // Используем только это имя
+    @FXML private ComboBox<User> childSelector; 
 
     private Task taskToEdit = null;
 
     @FXML
     public void initialize() {
-        // 1. Заполняем список детей
+        
         childSelector.getItems().addAll(
                 DataService.getUsers().stream()
                         .filter(u -> u.getRole() == Role.CHILD)
                         .toList()
         );
 
-        // 2. Настраиваем отображение имен в ComboBox
+        
         childSelector.setCellFactory(lv -> new ListCell<>() {
             @Override
             protected void updateItem(User item, boolean empty) {
@@ -35,13 +35,13 @@ public class AddTaskController {
         childSelector.setButtonCell(childSelector.getCellFactory().call(null));
     }
 
-    // Метод для режима редактирования
+    
     public void setTaskData(Task task) {
         this.taskToEdit = task;
         titleField.setText(task.getTitle());
         rewardField.setText(String.valueOf(task.getReward()));
 
-        // Находим объект ребенка по ID и выбираем его в селекторе
+        
         User selectedChild = DataService.getUserById(task.getChildId());
         childSelector.getSelectionModel().select(selectedChild);
     }
@@ -61,12 +61,12 @@ public class AddTaskController {
             int reward = Integer.parseInt(rewardStr);
 
             if (taskToEdit != null) {
-                // РЕЖИМ РЕДАКТИРОВАНИЯ
+                
                 taskToEdit.setTitle(title);
                 taskToEdit.setReward(reward);
                 taskToEdit.setChildId(selectedChild.getId());
             } else {
-                // РЕЖИМ СОЗДАНИЯ НОВОЙ ЗАДАЧИ
+                
                 int newId = DataService.getTasks().stream()
                         .mapToInt(Task::getId).max().orElse(0) + 1;
 
@@ -74,7 +74,7 @@ public class AddTaskController {
                 DataService.getTasks().add(newTask);
             }
 
-            DataService.saveData(); // Сохраняем общий список в JSON
+            DataService.saveData(); 
             closeWindow();
 
         } catch (NumberFormatException e) {

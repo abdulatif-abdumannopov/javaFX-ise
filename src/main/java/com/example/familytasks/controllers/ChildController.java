@@ -32,10 +32,10 @@ public class ChildController {
 
     @FXML
     public void initialize() {
-        // Получаем текущего ребенка из сессии
+        
         currentUser = SessionService.getSavedSessionUser();
 
-        // Настройка колонок (используем надежный способ с лямбдами)
+        
         colTitle.setCellValueFactory(d -> new javafx.beans.property.SimpleStringProperty(d.getValue().getTitle()));
         colReward.setCellValueFactory(d -> new javafx.beans.property.SimpleObjectProperty<>(d.getValue().getReward()));
         colStatus.setCellValueFactory(d -> new javafx.beans.property.SimpleStringProperty(d.getValue().getStatus()));
@@ -47,13 +47,13 @@ public class ChildController {
         if (currentUser == null) return;
         balanceLabel.setText(String.valueOf(currentUser.getBalance()));
 
-        // --- СОРТИРОВКА И ФИЛЬТРАЦИЯ ---
+        
         List<Task> allTasks = new ArrayList<>(DataService.getTasks());
-        Collections.reverse(allTasks); // Последние добавленные — в начало списка
+        Collections.reverse(allTasks); 
 
         List<Task> myActiveTasks = allTasks.stream()
-                .filter(t -> t.getChildId() == currentUser.getId()) // Только мои
-                .filter(t -> !"COMPLETED".equals(t.getStatus()))    // Только не завершенные
+                .filter(t -> t.getChildId() == currentUser.getId()) 
+                .filter(t -> !"COMPLETED".equals(t.getStatus()))    
                 .toList();
 
         tasksTable.setItems(FXCollections.observableArrayList(myActiveTasks));
@@ -79,10 +79,10 @@ public class ChildController {
             selected.setStatus("PENDING");
             DataService.saveData();
 
-            // КЛЮЧЕВОЙ МОМЕНТ:
-            tasksTable.refresh(); // Заставляет таблицу перечитать данные из объектов
-            // Либо вызови свой метод:
-            // refreshData();
+            
+            tasksTable.refresh(); 
+            
+            
         }
     }
 
@@ -101,6 +101,6 @@ public class ChildController {
         stage.setScene(new Scene(loader.load()));
         stage.showAndWait();
 
-        refreshData(); // Обновим экран, вдруг имя поменялось
+        refreshData(); 
     }
 }

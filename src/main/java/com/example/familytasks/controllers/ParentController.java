@@ -25,16 +25,16 @@ public class ParentController {
 
     @FXML private ListView<String> childrenList;
 
-    // Таблица и колонки
+    
     @FXML private TableView<Task> tasksTable;
     @FXML private TableColumn<Task, String> colTitle;
     @FXML private TableColumn<Task, Integer> colReward;
     @FXML private TableColumn<Task, String> colStatus;
-    @FXML private TableColumn<Task, String> colChild; // Пока выведем ID ребенка
+    @FXML private TableColumn<Task, String> colChild; 
     @FXML private Button btnReject;
     @FXML private Button btnApprove;
     public void initialize() {
-        // Явно прописываем получение данных для каждой колонки
+        
         colTitle.setCellValueFactory(cellData ->
                 new javafx.beans.property.SimpleStringProperty(cellData.getValue().getTitle()));
 
@@ -54,10 +54,10 @@ public class ParentController {
         btnApprove.setDisable(true);
         btnReject.setDisable(true);
 
-        // Следим за выбором в таблице
+        
         tasksTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
-                // Кнопка активна только если статус PENDING
+                
                 btnApprove.setDisable(!"PENDING".equals(newSelection.getStatus()));
                 btnReject.setDisable(!"PENDING".equals(newSelection.getStatus()));
             } else {
@@ -71,7 +71,7 @@ public class ParentController {
     }
 
     public void refreshData() {
-        // Обновление списка детей с актуальным балансом
+        
         ObservableList<String> childrenNames = FXCollections.observableArrayList();
         for (User u : DataService.getUsers()) {
             if (u.getRole() == Role.CHILD) {
@@ -80,11 +80,11 @@ public class ParentController {
         }
         childrenList.setItems(childrenNames);
 
-        // Обновление таблицы
+        
         List<Task> allTasks = new ArrayList<>(DataService.getTasks());
-        Collections.reverse(allTasks); // Разворачиваем список
+        Collections.reverse(allTasks); 
 
-// Далее фильтруем только АКТИВНЫЕ задачи (NEW и PENDING)
+
         List<Task> activeTasks = allTasks.stream()
                 .filter(t -> !"COMPLETED".equals(t.getStatus()))
                 .toList();
@@ -101,14 +101,14 @@ public class ParentController {
         stage.setTitle("Новое задание");
         stage.setScene(new Scene(loader.load()));
 
-        stage.showAndWait(); // Программа замрет здесь, пока окно не закроется
+        stage.showAndWait(); 
 
-        refreshData(); // Как только закрыли окно создания — обновляем таблицу
+        refreshData(); 
     }
 
     @FXML
     private void handleLogout() throws IOException {
-        SessionService.clearSession(); // Удаляем файл session.json
+        SessionService.clearSession(); 
         HelloApplication.changeScene("login.fxml");
     }
 
@@ -123,9 +123,9 @@ public class ParentController {
         scene.getStylesheets().add(org.kordamp.bootstrapfx.BootstrapFX.bootstrapFXStylesheet());
 
         stage.setScene(scene);
-        stage.showAndWait(); // Ждем, пока родитель закончит ввод
+        stage.showAndWait(); 
 
-        refreshData(); // Обновляем список детей в левой части экрана
+        refreshData(); 
     }
 
     @FXML
@@ -133,7 +133,7 @@ public class ParentController {
         Task selected = tasksTable.getSelectionModel().getSelectedItem();
 
         if (selected != null) {
-            System.out.println("Выбрана задача со статусом: " + selected.getStatus()); // Для отладки
+            System.out.println("Выбрана задача со статусом: " + selected.getStatus()); 
 
             if ("PENDING".equals(selected.getStatus())) {
                 selected.setStatus("COMPLETED");
@@ -144,9 +144,9 @@ public class ParentController {
                 }
 
                 DataService.saveData();
-                refreshData(); // Этот метод у тебя уже вызывает tasksTable.refresh()
+                refreshData(); 
             } else {
-                // Если статус не PENDING, кнопка как бы "не работает"
+                
                 System.out.println("Эту задачу нельзя одобрить, она еще не на проверке.");
             }
         }
@@ -156,7 +156,7 @@ public class ParentController {
     private void handleRejectTask() {
         Task selected = tasksTable.getSelectionModel().getSelectedItem();
         if (selected != null && "PENDING".equals(selected.getStatus())) {
-            selected.setStatus("NEW"); // Возвращаем в работу
+            selected.setStatus("NEW"); 
             DataService.saveData();
             refreshData();
         }
@@ -164,18 +164,18 @@ public class ParentController {
 
     @FXML
     private void handleShowHistory() throws IOException {
-        // 1. Загружаем FXML окна истории
+        
         FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource("history_dialog.fxml"));
 
-        // 2. Создаем сцену
+        
         Scene scene = new Scene(loader.load());
 
-        // 3. Создаем новое окно (Stage)
+        
         Stage stage = new Stage();
-        stage.initModality(Modality.APPLICATION_MODAL); // Чтобы нельзя было кликать основное окно
+        stage.initModality(Modality.APPLICATION_MODAL); 
         stage.setTitle("История выполненных заданий");
 
-        // 4. Применяем стили и показываем
+        
         scene.getStylesheets().add(org.kordamp.bootstrapfx.BootstrapFX.bootstrapFXStylesheet());
         stage.setScene(scene);
         stage.show();
@@ -189,7 +189,7 @@ public class ParentController {
         stage.setScene(new Scene(loader.load()));
         stage.showAndWait();
 
-        refreshData(); // Обновим экран, вдруг имя поменялось
+        refreshData(); 
     }
 
     @FXML
@@ -209,10 +209,10 @@ public class ParentController {
 
     @FXML
     private void handleDeleteChild() {
-        // В идеале тут нужно выбрать ребенка из ListView
+        
         int selectedIdx = childrenList.getSelectionModel().getSelectedIndex();
         if (selectedIdx >= 0) {
-            // Извлекаем имя из строки "Имя | Баланс: 0 🪙"
+            
             String selectedItem = childrenList.getSelectionModel().getSelectedItem();
             String childName = selectedItem.split(" \\|")[0];
 
@@ -235,7 +235,7 @@ public class ParentController {
             Scene scene = new Scene(loader.load());
 
             AddTaskController controller = loader.getController();
-            controller.setTaskData(selected); // Передаем данные
+            controller.setTaskData(selected); 
 
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);

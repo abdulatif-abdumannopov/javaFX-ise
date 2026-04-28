@@ -46,7 +46,7 @@ public class DataService {
         }
     }
 
-    // Безопасная аутентификация
+    
     public static User authenticate(String name, String password) {
         User user = currentData.users.stream()
                 .filter(u -> u.getName().equals(name))
@@ -54,7 +54,7 @@ public class DataService {
                 .orElse(null);
 
         if (user != null && BCrypt.checkpw(password, user.getPassword())) {
-            // При входе генерируем новый токен
+            
             user.setSessionToken(UUID.randomUUID().toString());
             saveData();
             return user;
@@ -62,7 +62,7 @@ public class DataService {
         return null;
     }
 
-    // Проверка токена (чтобы нельзя было просто подменить ID в сессии)
+    
     public static User getUserByToken(int id, String token) {
         User u = getUserById(id);
         if (u != null && token != null && token.equals(u.getSessionToken())) {

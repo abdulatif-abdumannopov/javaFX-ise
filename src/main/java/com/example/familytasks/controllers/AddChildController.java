@@ -19,17 +19,17 @@ public class AddChildController {
         String rawPassword = passwordField.getText().trim();
 
         if (!name.isEmpty() && !rawPassword.isEmpty()) {
-            // 1. Генерируем ХЕШ вместо сохранения чистого текста
+            
             String hashedPassword = BCrypt.hashpw(rawPassword, BCrypt.gensalt());
 
-            // 2. Создаем ID (лучше брать максимальный + 1)
+            
             int newId = DataService.getUsers().stream()
                     .mapToInt(User::getId).max().orElse(0) + 1;
 
-            // 3. Создаем объект с ХЕШЕМ
+            
             User newChild = new User(newId, name, hashedPassword, Role.CHILD);
 
-            // 4. Добавляем и сохраняем
+            
             DataService.getUsers().add(newChild);
             DataService.saveData();
 

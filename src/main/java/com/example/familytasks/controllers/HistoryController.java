@@ -45,7 +45,7 @@ public class HistoryController {
                 .filter(t -> current.getRole() == Role.PARENT || t.getChildId() == current.getId())
                 .collect(Collectors.toList());
 
-        Collections.reverse(history); // Последние выполненные — сверху
+        Collections.reverse(history); 
         historyTable.setItems(FXCollections.observableArrayList(history));
     }
 

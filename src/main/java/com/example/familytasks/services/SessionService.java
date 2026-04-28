@@ -8,16 +8,16 @@ public class SessionService {
     private static final String SESSION_FILE = "session.json";
     private static final Gson gson = new Gson();
 
-    // Класс для структуры файла сессии
+    
     static class SessionData {
         int activeUserId;
-        String token; // Добавляем токен
+        String token; 
     }
 
     public static void saveSession(User user) {
         SessionData session = new SessionData();
         session.activeUserId = user.getId();
-        session.token = user.getSessionToken(); // Сохраняем токен из объекта User
+        session.token = user.getSessionToken(); 
 
         try (Writer writer = new FileWriter(SESSION_FILE)) {
             gson.toJson(session, writer);
@@ -31,7 +31,7 @@ public class SessionService {
         if (file.exists()) {
             try (Reader reader = new FileReader(file)) {
                 SessionData session = gson.fromJson(reader, SessionData.class);
-                // Проверяем соответствие ID и Токена через DataService
+                
                 return DataService.getUserByToken(session.activeUserId, session.token);
             } catch (IOException e) {
                 e.printStackTrace();
