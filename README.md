@@ -15,7 +15,7 @@ A desktop task-management application built with **JavaFX 21**, implementing a p
 
 ```bash
 # Clone the repository
-git clone https://github.com/your-repo/familytasks.git
+git clone https://github.com/abdulatif-abdumannopov/javaFX-ise
 cd familytasks
 
 # Build the project (Maven Wrapper included — no global Maven required)
